@@ -1,0 +1,15 @@
+graft pyhlicorn
+graft data
+prune tests
+prune .github
+include pyproject.toml
+include LICENSE
+include README.md
+include run_inference.py
+exclude .gitignore
+global-exclude .DS_Store
+global-exclude *.py[cod]
+global-exclude __pycache__
+global-exclude *.so
+global-exclude *.dll
+global-exclude *.exe

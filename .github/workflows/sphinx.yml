@@ -1,0 +1,66 @@
+name: "Sphinx: Render docs"
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Create and Activate virtual environment
+      run: |
+        python -m venv .venv
+        source .venv/bin/activate
+        echo "$GITHUB_WORKSPACE/.venv/bin" >> $GITHUB_PATH
+
+    - name: Upgrade pip
+      run: |
+        source .venv/bin/activate
+        python -m pip install --upgrade pip
+
+    - name: Install dependencies
+      run: |
+        source .venv/bin/activate
+        pip install --no-cache-dir -r requirements/doc-requirements.txt
+        pip install --no-cache-dir -e .
+
+    - name: Set PYTHONPATH
+      run: |
+        echo "PYTHONPATH=$GITHUB_WORKSPACE/.venv/lib/python3.*/site-packages:$GITHUB_WORKSPACE" >> $GITHUB_ENV
+
+    - name: Debug Environment
+      run: |
+        source .venv/bin/activate
+        python --version
+        pip list
+        echo $PYTHONPATH
+        ls -l .venv/lib/python3.*/site-packages
+
+    - name: Build HTML
+      run: |
+        source .venv/bin/activate
+        make html -C docs
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: html-docs
+        path: docs/build/html/
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: docs/build/html
