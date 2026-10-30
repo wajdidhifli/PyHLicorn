@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "setuptools_scm", "numpy"]
+requires = ["setuptools", "numpy"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -12,6 +12,9 @@ license = "GPL-3.0-or-later"
 authors = [
     {name = "Wajdi Dhifli", email = "wajdi.dhifli@univ-lille.fr"},
     {name = "Mohammad Abu Awad"},
+    {name = "Jeeda Kotob"},
+    {name = "Nour Elislem Karabadji"},
+    {name = "Ali Assi"},
     {name = "Mohamed Elati", email = "mohamed.elati@univ-lille.fr"},
 ]
 keywords = [
@@ -57,4 +60,5 @@ namespaces = false
 
 [tool.cibuildwheel]
 skip = "cp36-* cp37-* cp38-* cp39-* pp* *_i686 *_ppc64le *_s390x *_universal2"
-before-test = "pip install -r {project}/requirements/requirements.txt"
+test-requires = ["pytest"]
+test-command = "pytest {project}/tests"

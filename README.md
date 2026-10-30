@@ -1,5 +1,9 @@
 # PyHLicorn
 
+[![PyPI version](https://img.shields.io/pypi/v/pyhlicorn.svg)](https://pypi.org/project/pyhlicorn/)
+[![Python versions](https://img.shields.io/pypi/pyversions/pyhlicorn.svg)](https://pypi.org/project/pyhlicorn/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 **PyHLicorn** is an efficient Python library for inferring cooperative Gene Regulatory Networks (GRNs) directly from transcriptomic expression data, based on the hybrid h-LICORN algorithm.
 
 By modeling combinatorial interactions among transcription factors (TFs)—identifying co-activator and co-repressor complexes—PyHLicorn bridges discrete pattern mining and continuous expression modeling. It features vertical bitset candidate mining, compact integer representation, exact concordance pre-screening, a native C scoring kernel, and scalable multicore execution.
@@ -18,25 +22,29 @@ By modeling combinatorial interactions among transcription factors (TFs)—ident
 
 ## Installation
 
-### Prerequisites
-- Python $\ge$ 3.10
-- A standard C compiler (e.g. `gcc` or `clang`)
-- Development headers for Python and NumPy
+### From PyPI (Recommended)
 
-### Install from source
-Clone the repository and install in your Python environment:
+Install the released package directly via `pip`:
+
+```bash
+pip install pyhlicorn
+```
+
+### From Source (Development)
+
+Clone the repository and install in editable mode:
 
 ```bash
 git clone https://github.com/wajdidhifli/PyHLicorn.git
 cd PyHLicorn
 
-# Compile native extensions and install in editable mode:
+# Requires Python >= 3.10 and a standard C compiler (gcc or clang):
 pip install -e .
 ```
 
 ### Optional Dependencies
-- **Distributed Spark execution**: `pip install '.[spark]'`
-- **Memory profiling & monitoring**: `pip install '.[monitor]'`
+- **Distributed PySpark execution**: `pip install 'pyhlicorn[spark]'`
+- **Memory profiling & monitoring**: `pip install 'pyhlicorn[monitor]'`
 
 ---
 
@@ -49,6 +57,7 @@ import pandas as pd
 from pyhlicorn import HLicorn
 
 # 1. Load mandatory inputs
+# (Replace with your expression matrix and TF list, or clone the repo to use the bundled demo data)
 expression = pd.read_csv('data/CIT_BLCA_EXP.csv', index_col=0)
 tfs = pd.read_csv('data/HumanTF.csv', index_col=0).iloc[:, 0].tolist()
 
