@@ -18,7 +18,7 @@ jobs:
         include:
           - os: ubuntu-latest
             platform: linux
-            cibw_archs: "auto"
+            cibw_archs: "x86_64"
           - os: macos-14
             platform: macos-arm64
             cibw_archs: "arm64"
@@ -27,7 +27,7 @@ jobs:
             cibw_archs: "x86_64"
           - os: windows-latest
             platform: windows
-            cibw_archs: "auto"
+            cibw_archs: "AMD64"
 
     steps:
       - uses: actions/checkout@v4
@@ -36,6 +36,9 @@ jobs:
         uses: pypa/cibuildwheel@v2.23.3
         env:
           CIBW_ARCHS: ${{ matrix.cibw_archs }}
+          CIBW_SKIP: "*-win32 *_i686 pp* cp36-* cp37-* cp38-* cp39-* *_universal2"
+          CIBW_TEST_REQUIRES: "pytest"
+          CIBW_TEST_COMMAND: "pytest {project}/tests"
         with:
           package-dir: .
           output-dir: wheelhouse

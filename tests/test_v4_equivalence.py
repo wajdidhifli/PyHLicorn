@@ -10,6 +10,8 @@ from pyhlicorn.core.oneGeneHlicorn import oneGeneHlicorn
 from pyhlicorn.during_inference.__comblicorn import score_disjoint, _membership
 from pyhlicorn._serialization import normalize_frame, native
 from pyhlicorn.pre_inference.patterns import FrequentItemsets
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _reference_v3 import oneGeneHlicorn as v3
 
 
