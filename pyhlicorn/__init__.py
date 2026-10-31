@@ -44,7 +44,10 @@ def load_example_data():
     return expr, tfs
 
 
+__version__ = "0.1.1"
+
 __all__ = [
+    '__version__',
     'HLicorn',
     'PreProcess',
     'Network',

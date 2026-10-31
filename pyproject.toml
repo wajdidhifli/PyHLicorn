@@ -4,17 +4,21 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyhlicorn"
-version = "0.1.0"
+version = "0.1.1"
 description = "Efficient cooperative gene regulatory network inference in Python"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "GPL-3.0-or-later"
 authors = [
-    {name = "Wajdi Dhifli", email = "wajdi.dhifli@univ-lille.fr"},
+    {name = "Wajdi Dhifli"},
     {name = "Mohammad Abu Awad"},
     {name = "Jeeda Kotob"},
     {name = "Nour Elislem Karabadji"},
     {name = "Ali Assi"},
+    {name = "Mohamed Elati"},
+]
+maintainers = [
+    {name = "Wajdi Dhifli", email = "wajdi.dhifli@univ-lille.fr"},
     {name = "Mohamed Elati", email = "mohamed.elati@univ-lille.fr"},
 ]
 keywords = [
@@ -44,7 +48,6 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-pyfim = ["pyfim>=6.28"]
 spark = ["pyspark>=3.5.0"]
 monitor = ["psutil>=5.9"]
 

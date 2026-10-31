@@ -54,6 +54,11 @@ def parse_args(args_list=None):
         description="Infer Cooperative Gene Regulatory Networks using PyHLicorn (v8 size-bounded mining)"
     )
     parser.add_argument(
+        "--version",
+        action="version",
+        version="%(prog)s 0.1.1",
+    )
+    parser.add_argument(
         "--demo",
         action="store_true",
         help="Run inference on bundled demonstration dataset (100 genes, 20 TFs).",
