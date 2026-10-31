@@ -1,52 +1,29 @@
-name: Build 
+name: Build Wheels
 
-# on: [push, pull_request] # till test
-on: workflow_dispatch
-
-# on:
-#   workflow_dispatch:
-#   pull_request:
-#   push:
-#     branches:
-#       - main
-#   release:
-#     types:
-#       - published
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [published]
 
 jobs:
   build_wheels:
-    name: Build wheels for ${{ matrix.os }}
-    runs-on: ${{ matrix.runs-on }}
+    name: Build wheels on ${{ matrix.os }} (${{ matrix.cibw_archs || 'auto' }})
+    runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false #If one fails contiue ##### REMOVE BEFORE PUBLISH #####
+      fail-fast: false
       matrix:
-        # os: [ linux-intel, linux-arm, windows, macOS-intel, macOS-arm, pyodide ] # After linux-arm is only available for public repo ### Update later
-        os: [ linux-intel, windows, macOS-intel, macOS-arm, pyodide ]
         include:
-          - archs: auto
-            platform: auto
-
-          - os: linux-intel
-            runs-on: ubuntu-latest
-
-          # - os: linux-arm
-          #   runs-on: ubuntu-24.04-arm
-
-          - os: windows
-            runs-on: windows-latest
-            
-          - os: macos-intel
-            # macos-13 was the last x86_64 runner
-            runs-on: macos-13
-            
-          - os: macos-arm
-            # macos-14+ (including latest) are ARM64 runners
-            runs-on: macos-latest
-            archs: auto #,universal2
-
-          - os: pyodide
-            runs-on: ubuntu-latest
-            platform: pyodide
+          - os: ubuntu-latest
+            cibw_archs: "auto"
+          - os: macos-13
+            cibw_archs: "x86_64"
+          - os: macos-14
+            cibw_archs: "arm64"
+          - os: windows-latest
+            cibw_archs: "auto"
 
     steps:
       - uses: actions/checkout@v4
@@ -54,9 +31,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.23.3
         env:
-          CIBW_PLATFORM: ${{ matrix.platform }}
-          CIBW_ARCHS: ${{ matrix.archs }}
-        # Can also be configured directly, using `with:`
+          CIBW_ARCHS: ${{ matrix.cibw_archs }}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -70,35 +45,21 @@ jobs:
   build_sdist:
     name: Build source distribution
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build
+        run: python -m pip install --upgrade pip build
+
       - name: Build sdist
-        run: pipx run build --sdist
+        run: python -m build --sdist
 
       - uses: actions/upload-artifact@v4
         with:
           name: cibw-sdist
           path: dist/*.tar.gz
-
-  # upload_pypi:
-  #   needs: [build_wheels, build_sdist]
-  #   runs-on: ubuntu-latest
-  #   environment: pypi
-  #   permissions:
-  #     id-token: write
-  #   if: github.event_name == 'release' && github.event.action == 'published'
-  #   # or, alternatively, upload to PyPI on every tag starting with 'v' (remove on: release above to use this)
-  #   # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-  #   steps:
-  #     - uses: actions/download-artifact@v4
-  #       with:
-  #         # unpacks all CIBW artifacts into dist/
-  #         pattern: cibw-*
-  #         path: dist
-  #         merge-multiple: true
-
-  #     - uses: pypa/gh-action-pypi-publish@release/v1
-  #       with:
-  #         # To test: repository-url: https://test.pypi.org/legacy/

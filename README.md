@@ -16,7 +16,8 @@ By modeling combinatorial interactions among transcription factors (TFs)—ident
 - **High Performance**: Achieves up to **26.2× speedups** and over **82% peak memory reduction** on real bulk transcriptomic cohorts (e.g., TCGA breast cancer).
 - **Scalable Multicore Execution**: Seamless parallelization across CPU cores via Joblib (`loky` backend) with optional distributed PySpark support.
 - **Adaptive Memory Management**: Automatically manages candidate regulator pools with in-memory arrays and spill-to-disk safeguards for large combinatorial spaces.
-- **Command-Line Runner**: Ready-to-use CLI script (`run_inference.py`) for automated batch processing and pipeline integration.
+- **Command-Line Interface**: Installed `pyhlicorn` command and bundled `run_inference.py` script for automated batch processing and pipeline execution.
+- **Self-Contained Demo**: Packaged example dataset accessible via Python (`pyhlicorn.load_example_data()`) or CLI (`pyhlicorn --demo`).
 
 ---
 
@@ -30,6 +31,15 @@ Install the released package directly via `pip`:
 pip install pyhlicorn
 ```
 
+Pre-compiled binary wheels are distributed for common architectures (Linux x86_64, macOS Apple Silicon, macOS Intel, and Windows).
+
+#### Compiler Requirements for Source Distributions
+When installing from source (`.tar.gz`) or if a pre-compiled wheel is unavailable for your specific platform/Python version, `pip` compiles the high-performance C scoring kernel during installation. This requires a standard C compiler and Python development headers:
+- **Linux (Ubuntu/Debian)**: `sudo apt-get install build-essential python3-dev`
+- **Linux (RHEL/CentOS/Fedora)**: `sudo dnf install gcc python3-devel`
+- **macOS**: `xcode-select --install`
+- **Windows**: [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (MSVC 14.0 or newer)
+
 ### From Source (Development)
 
 Clone the repository and install in editable mode:
@@ -37,8 +47,6 @@ Clone the repository and install in editable mode:
 ```bash
 git clone https://github.com/wajdidhifli/PyHLicorn.git
 cd PyHLicorn
-
-# Requires Python >= 3.10 and a standard C compiler (gcc or clang):
 pip install -e .
 ```
 
@@ -53,16 +61,13 @@ pip install -e .
 ### 1. Python API
 
 ```python
-import pandas as pd
-from pyhlicorn import HLicorn
+import pyhlicorn
 
-# 1. Load mandatory inputs
-# (Replace with your expression matrix and TF list, or clone the repo to use the bundled demo data)
-expression = pd.read_csv('data/CIT_BLCA_EXP.csv', index_col=0)
-tfs = pd.read_csv('data/HumanTF.csv', index_col=0).iloc[:, 0].tolist()
+# 1. Load data (use bundled example dataset, or pass custom pandas DataFrames/CSVs)
+expression, tfs = pyhlicorn.load_example_data()
 
 # 2. Configure HLicorn with recommended algorithmic parameters
-inference = HLicorn(
+inference = pyhlicorn.HLicorn(
     min_gene_support=0.10,     # Gene non-zero variation cutoff
     min_coreg_support=0.10,    # Minimum co-regulator support
     max_coreg=3,               # Maximum co-regulator complex size (K=3)
@@ -85,19 +90,22 @@ print(network.GRN.head())
 network.save_as_json('inferred_network.json')
 ```
 
-### 2. Command-Line Runner (`run_inference.py`)
+### 2. Command-Line Interface (`pyhlicorn`)
 
-Run network inference directly from your terminal using the bundled reference script:
+When installed via `pip`, the `pyhlicorn` command is added directly to your environment:
 
 ```bash
-# Basic run with mandatory inputs and recommended 4 workers:
-python run_inference.py \
-    --expr data/CIT_BLCA_EXP.csv \
-    --tf data/HumanTF.csv \
+# Instant verification on bundled demonstration data:
+pyhlicorn --demo
+
+# Basic run with your own expression and TF files:
+pyhlicorn \
+    --expr path/to/expression.csv \
+    --tf path/to/tfs.txt \
     --n-jobs 4
 
 # Advanced run with custom outputs and fit-quality filtering:
-python run_inference.py \
+pyhlicorn \
     --expr data/CIT_BLCA_EXP.csv \
     --tf data/HumanTF.csv \
     --max-coreg 3 \
@@ -109,13 +117,15 @@ python run_inference.py \
     --compact-json
 ```
 
+*(Note: In a cloned repository checkout, `python run_inference.py` provides the identical CLI functionality.)*
+
 ---
 
 ## Configuration & Parameters
 
 ### 1. Mandatory Inputs
 
-These inputs are **strictly required** for network inference:
+These inputs are **strictly required** for network inference (unless using `--demo`):
 
 | Parameter (Python API) | CLI Flag | Type | Description |
 | :--- | :--- | :--- | :--- |
@@ -146,6 +156,7 @@ These options allow customizing discretization, restricting target genes, managi
 
 | Parameter (Python API) | CLI Flag | Type | Default | Description |
 | :--- | :--- | :--- | :--- | :--- |
+| — | `--demo` | Flag | `False` | Run network inference on the bundled example dataset (100 genes, 20 TFs). |
 | `discrete_expression` | `--disc` | `pd.DataFrame` / Path | `None` | Pre-computed ternary expression matrix $\{-1, 0, 1\}$ (under-expressed, neutral, over-expressed). If omitted, PyHLicorn auto-discretizes using `--sigma`. |
 | `threshold` | `--sigma` | `float` | `1.0` | Standard deviation multiplier used for Gaussian ternary auto-discretization ($[-\sigma, +\sigma]$) when `--disc` is not provided. |
 | `gene_list` | `--targets` | `list` / Path | `None` | Specific target genes for which regulatory models should be inferred. If omitted, all non-TF genes in the expression matrix are evaluated. |

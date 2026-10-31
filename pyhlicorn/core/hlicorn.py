@@ -28,7 +28,7 @@ def hlicorn(
     # inferenceParameters
     min_gene_support: float = 0.1,
     min_coreg_support: float = 0.1,
-    max_coreg: int = 5,
+    max_coreg: int = 3,
     search_thresh: float = 1 / 3,
     nGRN: int = 100,
     # Rules

@@ -42,9 +42,9 @@ class HLicorn:
         in which a set of co-regulators must share the same non-zero discretized 
         expression value to be considered a potential set of co-regulators.
 
-    max_coreg : int, optional, default: None
-        The maximum size of co-regulator groups to consider. 
-        Defaults to the number of TFs. Can be reduced to save memory.
+    max_coreg : int, optional, default: 3
+        The maximum size of co-regulator groups to consider (default: 3).
+        Can be adjusted based on biological scenario and memory constraints.
 
     search_thresh : float, optional, default: 1/3
         A value between 0 and 1 specifying the minimum proportion of samples 
@@ -69,7 +69,7 @@ class HLicorn:
         *,
         min_gene_support: float = 0.1,
         min_coreg_support: float = 0.1,
-        max_coreg: int = 5,
+        max_coreg: int = 3,
         search_thresh: float = 1/3,
         nGRN: int = 100,
         verbose : bool = False,
