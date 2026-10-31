@@ -1,6 +1,6 @@
 graft pyhlicorn
 graft data
-prune tests
+graft tests
 prune .github
 include pyproject.toml
 include LICENSE
