@@ -190,6 +190,17 @@ If you use PyHLicorn in your research, please cite:
 
 ---
 
+## Authors & Contributors
+
+- **Wajdi Dhifli** (`wajdi.dhifli@univ-lille.fr`) — *Maintainer*
+- **Mohammad AbuAwad** (`202410475@uopstd.edu.jo`)
+- **Jeeda Kotob** (`jk8835@rit.edu`)
+- **Nour Elislem Karabadji** (`n.karabadji@ensti-annaba.dz`)
+- **Ali Assi** (`Ali.Assi@rit.edu`)
+- **Mohamed Elati** (`mohamed.elati@univ-lille.fr`)
+
+---
+
 ## License
 
 This project is licensed under the [GNU General Public License v3.0](LICENSE).

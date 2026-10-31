@@ -56,7 +56,7 @@ def parse_args(args_list=None):
     parser.add_argument(
         "--version",
         action="version",
-        version="%(prog)s 0.1.1",
+        version="%(prog)s 0.1.2",
     )
     parser.add_argument(
         "--demo",
