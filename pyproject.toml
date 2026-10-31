@@ -10,16 +10,15 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "GPL-3.0-or-later"
 authors = [
-    {name = "Wajdi Dhifli"},
-    {name = "Mohammad Abu Awad"},
-    {name = "Jeeda Kotob"},
-    {name = "Nour Elislem Karabadji"},
-    {name = "Ali Assi"},
-    {name = "Mohamed Elati"},
+    {name = "Wajdi Dhifli", email = "wajdi.dhifli@univ-lille.fr"},
+    {name = "Mohammad AbuAwad", email = "202410475@uopstd.edu.jo"},
+    {name = "Jeeda Kotob", email = "jk8835@rit.edu"},
+    {name = "Nour Elislem Karabadji", email = "n.karabadji@ensti-annaba.dz"},
+    {name = "Ali Assi", email = "Ali.Assi@rit.edu"},
+    {name = "Mohamed Elati", email = "mohamed.elati@univ-lille.fr"},
 ]
 maintainers = [
     {name = "Wajdi Dhifli", email = "wajdi.dhifli@univ-lille.fr"},
-    {name = "Mohamed Elati", email = "mohamed.elati@univ-lille.fr"},
 ]
 keywords = [
     "gene regulatory networks",
