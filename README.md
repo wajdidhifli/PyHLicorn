@@ -183,21 +183,33 @@ pytest tests/ -v
 
 If you use PyHLicorn in your research, please cite:
 
-- **PyHLicorn**: Dhifli, W., Abu Awad, M., Kotob, J., Karabadji, N. E., Assi, A., & Elati, M. (2026). *PyHLicorn: efficient cooperative gene regulatory network inference in Python*. (Manuscript under review).
+- **PyHLicorn**: Dhifli, W., AbuAwad, M., Kotob, J., Karabadji, N. E., Assi, A., & Elati, M. (2026). *PyHLicorn: efficient cooperative gene regulatory network inference in Python*. (Manuscript under review).
 - **h-LICORN**: Chebil, I., Nicolle, R., Santini, G., Rouveirol, C., & Elati, M. (2014). *Hybrid method inference for the construction of cooperative regulatory network in human*. IEEE Transactions on NanoBioscience, 13(2), 97–103. DOI: 10.1109/TNB.2014.2316920.
 - **LICORN**: Elati, M., Neuvial, P., Bolotin-Fukuhara, M., Barillot, E., Radvanyi, F., & Rouveirol, C. (2007). *LICORN: learning cooperative regulation networks from gene expression data*. Bioinformatics, 23(18), 2407–2414. DOI: 10.1093/bioinformatics/btm352.
 - **CoRegNet**: Nicolle, R., Radvanyi, F., & Elati, M. (2015). *CoRegNet: reconstruction and integrated analysis of co-regulatory networks*. Bioinformatics, 31(18), 3066–3068. DOI: 10.1093/bioinformatics/btv305.
 
 ---
 
-## Authors & Contributors
+## Authors & Affiliations
 
-- **Wajdi Dhifli** (`wajdi.dhifli@univ-lille.fr`) — *Maintainer*
-- **Mohammad AbuAwad** (`202410475@uopstd.edu.jo`)
-- **Jeeda Kotob** (`jk8835@rit.edu`)
-- **Nour Elislem Karabadji** (`n.karabadji@ensti-annaba.dz`)
-- **Ali Assi** (`Ali.Assi@rit.edu`)
-- **Mohamed Elati** (`mohamed.elati@univ-lille.fr`)
+- **Wajdi Dhifli** (`wajdi.dhifli@univ-lille.fr`) — *Maintainer*  
+  Univ. Lille, Inserm, CHU Lille, CNRS, U1366-UMR9020 – CRCLille – Cancer Research Center of Lille, F-59000 Lille, France
+
+- **Mohammad AbuAwad** (`202410475@uopstd.edu.jo`)  
+  University of Petra, Faculty of Information Technology, 961343 Amman, Jordan
+
+- **Jeeda Kotob** (`jk8835@rit.edu`)  
+  Rochester Institute of Technology, Dubai, United Arab Emirates
+
+- **Nour Elislem Karabadji** (`n.karabadji@ensti-annaba.dz`)  
+  National Higher School of Technology and Engineering, Laboratoire De Technologies Des Systemes Energetiques (LTSE), 23005 Annaba, Algeria  
+  Electronic Document Management Laboratory (LabGED), Badji Mokhtar-Annaba University, 23000 Annaba, Algeria
+
+- **Ali Assi** (`Ali.Assi@rit.edu`)  
+  Rochester Institute of Technology, Dubai, United Arab Emirates
+
+- **Mohamed Elati** (`mohamed.elati@univ-lille.fr`)  
+  Univ. Lille, Inserm, CHU Lille, CNRS, U1366-UMR9020 – CRCLille – Cancer Research Center of Lille, F-59000 Lille, France
 
 ---
 
