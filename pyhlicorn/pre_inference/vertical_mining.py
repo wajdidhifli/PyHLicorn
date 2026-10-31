@@ -186,9 +186,9 @@ def bounded_closed_sets(columns, transactions, minimum, zmin, zmax,
 def mine_vertical(matrix, names, min_gene_support, min_coreg_support, max_coreg,
                   max_itemsets=None, timeout_seconds=None, temp_dir=None,
                   chunk_bytes=1024*1024, _output_directory=None, spill_threshold_bytes=None):
-    started = time.monotonic()
+    started = time.perf_counter()
     def check():
-        if timeout_seconds is not None and time.monotonic()-started > timeout_seconds:
+        if timeout_seconds is not None and (time.perf_counter() - started) >= timeout_seconds:
             raise TimeoutError('Vertical mining exceeded timeout_seconds; no partial result returned.')
     columns = bitsets_from_matrix(matrix, check)
     transactions = len(matrix)
@@ -224,7 +224,7 @@ def mine_vertical(matrix, names, min_gene_support, min_coreg_support, max_coreg,
             compact_buffer_bytes=result.buffer_bytes, chunk_bytes=chunk_bytes,
             vertical_bitsets_python_bytes=sum(sys.getsizeof(tid) for tid in columns),
             transaction_bitsets_python_bytes=sum(sys.getsizeof(row) for row in rows) if rows is not None else 0,
-            seconds=time.monotonic()-started, transactions=transactions,
+            seconds=time.perf_counter()-started, transactions=transactions,
             regulators=matrix.shape[1], min_coreg_occurrences=coreg_min,
             enumeration=stats, ordering='cardinality then canonical enumeration')
         return result

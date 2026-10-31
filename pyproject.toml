@@ -71,3 +71,4 @@ addopts = "--import-mode=importlib"
 skip = "*-win32 *_i686 pp* cp36-* cp37-* cp38-* cp39-* *_universal2"
 test-requires = ["pytest"]
 test-command = "pytest {project}/tests"
+manylinux-x86_64-image = "manylinux_2_28"

@@ -90,7 +90,7 @@ class MemorySparkTests(unittest.TestCase):
     def test_timeout_stops_worker(self):
         _, _, frame = self.fixture()
         with self.assertRaises(TimeoutError):
-            FrequentItemsets.get_coregs(frame, .1, .1, 2, timeout_seconds=.000001)
+            FrequentItemsets.get_coregs(frame, .1, .1, 2, timeout_seconds=1e-9)
 
     def test_itemset_limit_returns_no_partial_result(self):
         _, _, frame = self.fixture()

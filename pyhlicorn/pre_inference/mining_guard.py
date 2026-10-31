@@ -34,7 +34,7 @@ def guarded_mine(matrix, names, arguments, memory_limit_gb, timeout_seconds):
             with (path/'worker.log').open('w') as log:
                 worker = subprocess.Popen([sys.executable, '-m', 'pyhlicorn.pre_inference.mining_guard', directory],
                                           stdout=log, stderr=log)
-                started = time.monotonic()
+                started = time.perf_counter()
                 peak = 0
                 try:
                     process = psutil.Process(worker.pid) if memory_limit_gb is not None else None
@@ -48,7 +48,7 @@ def guarded_mine(matrix, names, arguments, memory_limit_gb, timeout_seconds):
                             if rss > memory_limit_gb * 1024**3:
                                 raise MemoryError(f'Mining exceeded its {memory_limit_gb:g} GiB RSS budget; '
                                                   'worker stopped, no incomplete candidates returned.')
-                        if timeout_seconds is not None and time.monotonic()-started > timeout_seconds:
+                        if timeout_seconds is not None and time.perf_counter()-started > timeout_seconds:
                             raise TimeoutError('Mining exceeded timeout_seconds; worker stopped.')
                         time.sleep(0.1)
                     if worker.returncode:
@@ -72,7 +72,7 @@ def guarded_mine(matrix, names, arguments, memory_limit_gb, timeout_seconds):
                     output_directory = None
             result.diagnostics.update(monitored_peak_rss_bytes=peak if memory_limit_gb is not None else None,
                                       memory_limit_gb=memory_limit_gb, timeout_seconds=timeout_seconds,
-                                      guarded_elapsed_seconds=time.monotonic()-started)
+                                      guarded_elapsed_seconds=time.perf_counter()-started)
             transferred = True
             return result
     finally:
