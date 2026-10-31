@@ -19,7 +19,7 @@ jobs:
           - os: ubuntu-latest
             platform: linux
             cibw_archs: "x86_64"
-          - os: macos-14
+          - os: macos-15
             platform: macos-arm64
             cibw_archs: "arm64"
           - os: macos-15-intel
